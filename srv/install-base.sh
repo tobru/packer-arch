@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DISK='/dev/sda'
+DISK='/dev/vda'
 FQDN='vagrant-arch.vagrantup.com'
 KEYMAP='us'
 LANGUAGE='en_US.UTF-8'
@@ -34,7 +34,7 @@ echo '==> bootstrapping the base installation'
 /usr/bin/pacstrap ${TARGET_DIR} base base-devel
 /usr/bin/arch-chroot ${TARGET_DIR} pacman -S --noconfirm gptfdisk openssh syslinux
 /usr/bin/arch-chroot ${TARGET_DIR} syslinux-install_update -i -a -m
-/usr/bin/sed -i 's/sda3/sda1/' "${TARGET_DIR}/boot/syslinux/syslinux.cfg"
+/usr/bin/sed -i 's/sda3/vda1/' "${TARGET_DIR}/boot/syslinux/syslinux.cfg"
 /usr/bin/sed -i 's/TIMEOUT 50/TIMEOUT 10/' "${TARGET_DIR}/boot/syslinux/syslinux.cfg"
 
 echo '==> generating the filesystem table'
@@ -82,4 +82,4 @@ echo '==> adding workaround for shutdown race condition'
 echo '==> installation complete!'
 /usr/bin/sleep 3
 /usr/bin/umount ${TARGET_DIR}
-/usr/bin/systemctl reboot
+#/usr/bin/systemctl reboot
